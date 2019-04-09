@@ -1,5 +1,5 @@
 ---
-title: "Resume"
+title: "Antoine Stos"
 runtime: shiny
 output: 
   html_document:
@@ -18,31 +18,46 @@ output:
 }
 </style>
 
-## Main page
+## Introduction
+
+Dear readers,   
+
+To summarise my application for the PhD position in Mathematical Modelling of Malaria dynamics in a visual, friendly and informative way I have created this webpage using R and some packages (R Markdown, Plotly, Ggplot, Shiny).  
+
+Have a good look and I hope you will enjoy it.  
+
+Antoine  
+
+***
+
+## Donut Plot
+
 
 ```{r, echo= FALSE, warning= FALSE, message= FALSE}
 library(ggplot2)
 library(plotly)  
 library(shiny)
-library(imager)
-library(magick)
 library(readxl)
-library(scales)
 library(knitr)
+library(dplyr)
+library(scales)
+library(htmlwidgets)
 
+#library(imager)
 
 #Comment
+#im<-load.image("image/Antoine.jpg") If you want to add a picture in the middle of the Donut Plot
+#r <- as.raster(im)
 
-im<-load.image("image/Antoine.jpg")
-r <- as.raster(im)
 
+#Data to create the segment of the Donut plot
 bv <- data.frame(var = c("Personal Profile",  "Hobbies", "Skills", "Achievements", "Work Experience", "Education", "Contact"), 
                  ymax = seq(10,70,10), 
                  ymin = seq(0,60,10), 
                  nbr = as.numeric(10))
 
 
-
+#Donut Plot
 output$var_grp_hist <-  renderPlotly({
 p <- bv %>%
   plot_ly(labels = ~var, values = ~nbr, type = 'pie', key = unique(bv$var),
@@ -51,12 +66,13 @@ p <- bv %>%
           hole = 0.6, 
           marker = list(colors = colors,
                         line = list(color = '#FFFFFF', width = 1)), 
-          sort = TRUE) %>% 
+          sort = TRUE, 
+          textfont = list(color = 'white')) %>% 
   layout(showlegend = F,
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), 
          images = list(
-            source =  raster2uri(r),
+            #source =  raster2uri(r),
             xref = "x",
             yref = "y",
             x = 1.7,
@@ -71,13 +87,17 @@ p <- bv %>%
   config(displayModeBar = F)
 })
 
+
+#Text if you clik on "Profile", text creation using HTML
 output$profile <- renderUI({ 
       HTML(paste( h4("Personal Profile"), "<br>",
-                  p("I have been working in Pharmaceuticals area for almost three years now. Started with an internship of three months,                      I had the chance to extend. I'm now working as a contractor as a Junior Biostatistician for Actelion."), "<br>",
-                  p("Mainly interested in exploratory analysis using new kind of tools, data visualisation with R / R Shiny and Rmarkdown, and machine learning, I had the opportunity to work on very interesting projects dealing with PAH and Multiple Sclerosisd desease."), 
-                  p("Data visualisation allow me to be creative, bringing clarity to data and a bit a fun to work")))
+                  p("I have been working in the Pharmaceutical area for almost three years. Starting in the industry                            working at Actelion with an internship of three months which was extended and resulted with an                             eventual promotion to a Junior Biostatistician position."), "<br>",
+                  p("My main interest is in exploratory analysis using new kinds of tools, data visualisation with R / R                        Shiny and Rmarkdown, and machine learning, I have had the opportunity to work on very interesting                          projects dealing with PAH and Multiple Sclerosis."), "<br>",
+                  p("Data visualisation allows me to be creative, bring clarity to data and have a bit a fun at work.")))
   })
 
+
+#Text and Picture if you clik on "Contact", text creation using HTML
 output$Contact <- renderUI({
   HTML(paste(h4("Contact"), "<br>",
              p(htmltools::tags$img(src = knitr::image_uri('image/Bon.PNG')),
@@ -91,6 +111,8 @@ output$Contact <- renderUI({
   ))
 })
 
+
+#Text if you clik on "Education", text creation using HTML
 output$Education <- renderUI({ 
       HTML(paste( h4("Education"), "<br>",
                   
@@ -114,57 +136,63 @@ output$Education <- renderUI({
                   ))
   })
 
+
+#Text if you clik on "Experience", text creation using HTML
 output$Expe <- renderUI({ 
       HTML(paste( h4("Work Experience"), "<br>",
                   
                   strong("2015"), ": 3 months internship at Acteleion Ltd as Biostatisticien", "<br>", 
-                  em("Building a SAS macro to dichotomize continuous variables based on Logistic Regression and ROC curve."), "<br>",
+                  em("Built a SAS macro to dichotomize continuous variables based on Logistic Regression and ROC curves."),                   "<br>",
                   
                   "<br>",
                   
                   strong("2016"), ": 9 months internship at Acteleion Ltd as Biostatisticien", "<br>",
-                  em("Extend my previous SAS macro to include survival data with Cox model and Kaplan-Meier estimate."), "<br>",
+                  em("Extend my previous SAS macro to include survival data with a Cox model and Kaplan-Meier estimates."),                   "<br>",
                   em("Being involved in statistical activities of an ongoing clinical trial."), "<br>",
                   
                   "<br>",
                   
                   strong("2016 - Current"), ": Contractor as Junior Biostatisticien for Actelion Ltd", "<br>",
-                  em("Being involved in statistical activities of an ongoing clinical trial for Multiple Sclerosis and PAH desease."), "<br>",
-                  em("Doing lot of work in data visualisation using R Shiny to sumarise the OPUS Registry for PAH"), "<br>",
-                  em("Combining R Shiny and Rmardown on exploratory analysis for Multiple Sclerosis")
+                  em("Involved in statistical activities of an ongoing clinical trial for Multiple Sclerosis and PAH                             disease."), "<br>",
+                  em("Data visualisation using R Shiny to summarize a registry for PAH"), "<br>",
+                  em("Combining R Shiny and Rmarkdown on exploratory analysis for Multiple Sclerosis")
       ))
                   
   })
 
+
+#Text if you clik on "Achievements", text creation using HTML
 output$Ach <- renderUI({ 
-      HTML(paste( h4("Achievments"), "<br>",
+      HTML(paste( h4("Achievements"), "<br>",
                   
-                  strong("2017"), ": Participation of a website about data vizualisation", "<br>", 
-                  em("Group of 4 Statisticiens / Programmer to bring vizualisation in data analysis. Mainly focused on R and R Shiny "), "<br>",
+                  strong("2018"), ": Participated in the creation of a website about data visualization", "<br>", 
+                  em("Group of 4 Statisticians / Programmers to bring visualization in data analysis. Mainly focused on R                        and R Shiny "), "<br>",
                   
                   "<br>",
                   
                   strong("2018"), ": Co-author of a R workshop", "<br>",
-                  em("During an offsite I was one of the presentator and author of a R workshop combining R basics, Ggplot and Shiny"), "<br>",
+                  em("During an offsite I was one of the presenters and authors of a R workshop combining R basics, Ggplot                       and Shiny"), "<br>",
                   
                   "<br>",
                   
-                  strong("2019"), ": Assitant of a paper which will be presented at the PhUse in Baltimore", "<br>",
-                  em("How to handle missing data using machine learning algorithm"), "<br>",
-                  em("We are comparing classical methods of missing data against differents methods of machine learning"), "<br>"
+                  strong("2019"), ": Co-author of a paper which will be presented at the PhUSE conferencein Baltimore",                      "<br>",
+                  em("Hit and Miss:  An evaluation of imputation techniques from Machine Learning."), "<br>",
+                  em("We compare classical statistical methods of missing data imputation against classical and                                  state-of-the-art methods from Machine Learning."), "<br>"
       ))
 })
   
+
+#Text if you clik on "Skills", text creation using HTML
   output$Ski <- renderUI({ 
       HTML(paste(h4("Skills"), "<br>",
                   
-                  p(strong("Machine Learning"), ": Classification algorithms (Nearest Neighbors, Bayesian, Logistic Regression,                            Classification Trees), Regression models (Linear / Multivariate regression, Logistic Regression, Count data, Random                     Forest)")
+                  p(strong("Machine Learning"), ": Classification algorithms (Nearest Neighbors, Bayesian, Logistic                            Regression, Classification Trees), Regression models (Linear / Multivariate regression, Logistic                           Regression, Count data, Random Forest)")
                   , "<br>", 
                   
-                  p(strong("Spatial statistics"), ": Stochastic process, Autocorrelation function, Correlogram, Kriging, Variogram)")
+                  p(strong("Spatial statistics"), ": Stochastic process, Autocorrelation function, Correlogram, Kriging,                       Variogram")
                   , "<br>", 
                   
-                  p(strong("Computer Skills"), ": SAS, R, R Shiny, R Markdown") 
+                  p(strong("Computer Skills"), ": SAS, R, R Shiny, R Markdown, GitHub") 
                   ,"<br>",
                   
                   p(strong("Languages"), ": French : Native        English : Fluent") 
@@ -174,16 +202,20 @@ output$Ach <- renderUI({
   })
 
   
+  
+ #Text and images if you clik on "Hobbies", text creation using HTML 
   output$Hobb <- renderUI({
   HTML(paste(h4("Hobbies"), "<br>",
-             p(htmltools::tags$img(src = knitr::image_uri('image/Nov.jpg'), width = "100px", height =                 "100px"),"Here is the SC Novartis Football team" ), "<br>", 
-             p(htmltools::tags$img(src = knitr::image_uri('image/Baobab.jpg'), width = "100px", height =                 "100px"),"Here are some babies baobabs" ), "<br>",
-             p(htmltools::tags$img(src = knitr::image_uri('image/Ski.jpg'), width = "100px", height =                 "100px"),"Time to time, snowboarding" )
+             p(htmltools::tags$img(src = knitr::image_uri('image/Nov.jpg'), width = "100px", height =                 "                   100px"),"Here is the SC Novartis Football team" ), "<br>", 
+             p(htmltools::tags$img(src = knitr::image_uri('image/Baobab.jpg'), width = "100px", height =                                  "100px"),"Here are some babies baobabs" ), "<br>",
+             p(htmltools::tags$img(src = knitr::image_uri('image/Ski.jpg'), width = "100px", height =                                     "100px"),"Time to time, snowboarding" )
             
   ))
 })
 
 
+  
+ #User Interface from Shiny, Donut Plot on the left and text/images on the right   
 fluidRow(
   column(6,
         renderUI({
@@ -197,7 +229,7 @@ fluidRow(
           s <- event_data("plotly_click")
           
           if (is.null(s)){ 
-            print("Please click on a box")
+            print("Please click on a slice")
             
           } else if (s$key[[1]] == "Personal Profile") { 
                htmlOutput("profile")
@@ -224,9 +256,26 @@ fluidRow(
 
 ## Application {.tabset}
 
-### Swimer Plot 
+
+### Cover letter
+```{r, echo= FALSE, warning= FALSE, message= FALSE}
+#Cover Letter, Jpg format 
+include_graphics('image/LT_AS.jpg') 
+```
+
+### Curriculum Vitae
+
 
 ```{r, echo= FALSE, warning= FALSE, message= FALSE}
+#CV, Jpg format
+include_graphics('image/CV_AS.jpg') 
+```
+
+### Swimmer Plot 
+
+```{r, echo= FALSE, warning= FALSE, message= FALSE}
+
+#Swimmer Plot, history of event
 
 swim <- read_excel("Data/Swimer.xlsx") %>% 
   mutate(STDT1 = format(as.Date(STDT), "%m-%y"),
@@ -235,7 +284,7 @@ swim <- read_excel("Data/Swimer.xlsx") %>%
 
 swim$Event <- as.factor(swim$Event)
 
-swim$Event <- factor(swim$Event, levels=c("Scientific Baccalaureate", "Bachelor Degree in Economics", "Leisure time",  "Master I in Statistics and Finance", "Internship as Stastisticien, Actelion" , "Master II Degree in Mathematics and Statistics", "Contractor as Statisticien, Actelion"))
+swim$Event <- factor(swim$Event, levels=c("Scientific Baccalaureate", "Bachelor Degree in Economics", "Leisure time",                                                "Master I in Statistics and Finance", "Internship as Stastistician, Actelion" ,                                            "Master II Degree in Mathematics and Statistics", "Contractor as Statistician,                                              Actelion"))
 
 renderPlot({
   p <- ggplot(data= swim %>% filter(!is.na(Start))) +
@@ -262,11 +311,3 @@ p
 ```
 
 
-### Curriculum Vitae
-
-
-```{r, echo= FALSE, warning= FALSE, message= FALSE}
-include_graphics('image/CV_AS.jpg') 
-```
-
-### Cover letter

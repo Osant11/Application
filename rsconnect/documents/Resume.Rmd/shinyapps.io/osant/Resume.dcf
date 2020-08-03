@@ -1,0 +1,12 @@
+name: Resume
+title: Resume
+username:
+account: osant
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2636925
+bundleId: 3468562
+url: https://osant.shinyapps.io/Resume/
+when: 1596449408.30898
+asMultiple: FALSE
+asStatic: FALSE

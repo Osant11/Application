@@ -47,9 +47,8 @@ library(htmlwidgets)
 library(imager)
 
 #Comment
-im<-load.image("image/Antoine.jpeg")  # If you want to add a picture in the middle of the Donut Plot
-im_1 <- imrotate(im, 90)
-r <- as.raster(im_1)
+im<-load.image("image/Antoine.jpg")  # If you want to add a picture in the middle of the Donut Plot
+r <- as.raster(im)
 
 
 
